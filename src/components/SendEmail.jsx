@@ -1,25 +1,18 @@
-import { useState } from 'react';
 import {useInput} from "../hooks/useInput.jsx";
-import { useDispatch } from "react-redux";
-import {useNavigate} from "react-router-dom";
+import {useState} from "react";
 
-import {setEmail} from "../redux/slices/email-sender/EmailSenderSlice.js";
-
-export const SendEmail = () => {
-    const [error, setError] = useState('');
+export default function SendEmail(setEmail) {
     const email = useInput('');
-
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+    const [error, setError] = useState('');
 
     const submitHandler = (e) => {
         e.preventDefault();
+
         if (!email.value) {
-            setError('Please enter your email.');
-        } else {
-            dispatch(setEmail(email.value));
-            navigate('/email/sent');
+            return setError('Please enter your email.');
         }
+
+        setEmail(email.value);
     }
 
     return (
@@ -30,7 +23,8 @@ export const SendEmail = () => {
                     <h1 className="mb-1 text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                         Forgot your password?
                     </h1>
-                    <p className="font-light text-gray-500 dark:text-gray-400">Don't fret! Just type in your email and
+                    <p className="font-light text-gray-500 dark:text-gray-400">Don't fret! Just type in your email
+                        and
                         we will send you a code to reset your password!</p>
                     <form className="mt-4 space-y-4 lg:mt-5 md:space-y-5" action="#">
                         <div>
@@ -40,9 +34,9 @@ export const SendEmail = () => {
                             <input type="email" name="email" id="email"
                                    value={email.value}
                                    onChange={email.onChange}
-                                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                   placeholder="name@company.com" required=""/>
-                                  {error && <p className="text-sm text-red-500">{error}</p>}
+                                   className='bg-gray-50 border text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                                   placeholder="name@company.com" />
+                                {error ? <p className="text-sm text-red-500">{error}</p> : null}
                         </div>
                         <button type="submit"
                                 onClick={submitHandler}

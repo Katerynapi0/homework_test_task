@@ -1,15 +1,4 @@
-import {useSelector} from "react-redux";
-import { useNavigate } from "react-router-dom";
-
-export const SentEmail = () => {
-    const email = useSelector(state => state.email.email);
-    const navigate = useNavigate();
-
-    if(!email){
-        navigate('/email');
-        return null;
-    }
-
+export default function SentEmail({email}) {
     return (
         <section className="bg-gray-50 dark:bg-gray-900">
             <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">

@@ -1,5 +1,7 @@
 import {Link} from "react-router-dom";
 import {useInput} from "../hooks/useInput.jsx";
+import {setUser} from "../redux/slices/user/UserSlice.js";
+import {useDispatch} from "react-redux";
 
 export const Registration = () => {
     const name = useInput('');
@@ -7,8 +9,19 @@ export const Registration = () => {
     const password = useInput('');
     const confirmPassword = useInput('');
 
+    const dispatch = useDispatch();
+
     const submitHandler = (e) => {
         e.preventDefault();
+
+        const user = {
+            name: name.value,
+            email: email.value,
+            password: password.value,
+            confirmPassword: confirmPassword.value
+        }
+
+        dispatch(setUser(user));
     }
 
     return (
